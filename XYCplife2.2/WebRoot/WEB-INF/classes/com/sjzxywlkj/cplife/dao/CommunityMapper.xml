@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjzxywlkj.cplife.dao.CommunityMapper">
+	<resultMap id="BaseResultMap" type="com.sjzxywlkj.cplife.pojo.Community">
+		<id column="community_id" jdbcType="CHAR" property="communityId" />
+		<result column="merchant_pid" jdbcType="CHAR" property="merchantPid" />
+		<result column="community_name" jdbcType="CHAR" property="communityName" />
+		<result column="district_code" jdbcType="CHAR" property="districtCode" />
+		<result column="community_address" jdbcType="CHAR" property="communityAddress" />
+		<result column="hotline" jdbcType="CHAR" property="hotline" />
+		<result column="status" jdbcType="CHAR" property="status" />
+		<result column="ervice_expires" jdbcType="DATE" property="erviceExpires" />
+		<result column="qr_code_image" jdbcType="CHAR" property="qrCodeImage" />
+		<result column="qr_code_expires" jdbcType="DATE" property="qrCodeExpires" />
+		<result column="account" jdbcType="CHAR" property="account" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<sql id="Base_Column_List">
+		community_id, merchant_pid, community_name, district_code,
+		community_address,
+		hotline,
+		status, ervice_expires, qr_code_image,
+		qr_code_expires
+	</sql>
+	<select id="selectByExample" parameterType="com.sjzxywlkj.cplife.pojo.CommunityExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from community
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from community
+		where community_id = #{communityId,jdbcType=CHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		community
+		where community_id = #{communityId,jdbcType=CHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.sjzxywlkj.cplife.pojo.CommunityExample">
+		delete from community
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.sjzxywlkj.cplife.pojo.Community">
+		insert into community
+		(community_id, merchant_pid, community_name,
+		district_code,
+		community_address, hotline,
+		status, ervice_expires, qr_code_image,
+		qr_code_expires)
+		values (#{communityId,jdbcType=CHAR},
+		#{merchantPid,jdbcType=CHAR},
+		#{communityName,jdbcType=CHAR},
+		#{districtCode,jdbcType=CHAR}, #{communityAddress,jdbcType=CHAR},
+		#{hotline,jdbcType=CHAR},
+		#{status,jdbcType=CHAR},
+		#{erviceExpires,jdbcType=DATE},
+		#{qrCodeImage,jdbcType=CHAR},
+		#{qrCodeExpires,jdbcType=DATE})
+	</insert>
+	<insert id="insertSelective" parameterType="com.sjzxywlkj.cplife.pojo.Community">
+		insert into community
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="communityId != null">
+				community_id,
+			</if>
+			<if test="merchantPid != null">
+				merchant_pid,
+			</if>
+			<if test="communityName != null">
+				community_name,
+			</if>
+			<if test="districtCode != null">
+				district_code,
+			</if>
+			<if test="communityAddress != null">
+				community_address,
+			</if>
+			<if test="hotline != null">
+				hotline,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="erviceExpires != null">
+				ervice_expires,
+			</if>
+			<if test="qrCodeImage != null">
+				qr_code_image,
+			</if>
+			<if test="qrCodeExpires != null">
+				qr_code_expires,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="communityId != null">
+				#{communityId,jdbcType=CHAR},
+			</if>
+			<if test="merchantPid != null">
+				#{merchantPid,jdbcType=CHAR},
+			</if>
+			<if test="communityName != null">
+				#{communityName,jdbcType=CHAR},
+			</if>
+			<if test="districtCode != null">
+				#{districtCode,jdbcType=CHAR},
+			</if>
+			<if test="communityAddress != null">
+				#{communityAddress,jdbcType=CHAR},
+			</if>
+			<if test="hotline != null">
+				#{hotline,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=CHAR},
+			</if>
+			<if test="erviceExpires != null">
+				#{erviceExpires,jdbcType=DATE},
+			</if>
+			<if test="qrCodeImage != null">
+				#{qrCodeImage,jdbcType=CHAR},
+			</if>
+			<if test="qrCodeExpires != null">
+				#{qrCodeExpires,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.sjzxywlkj.cplife.pojo.CommunityExample"
+		resultType="java.lang.Integer">
+		select count(*) from community
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update community
+		<set>
+			<if test="record.communityId != null">
+				community_id = #{record.communityId,jdbcType=CHAR},
+			</if>
+			<if test="record.merchantPid != null">
+				merchant_pid = #{record.merchantPid,jdbcType=CHAR},
+			</if>
+			<if test="record.communityName != null">
+				community_name = #{record.communityName,jdbcType=CHAR},
+			</if>
+			<if test="record.districtCode != null">
+				district_code = #{record.districtCode,jdbcType=CHAR},
+			</if>
+			<if test="record.communityAddress != null">
+				community_address =
+				#{record.communityAddress,jdbcType=CHAR},
+			</if>
+			<if test="record.hotline != null">
+				hotline = #{record.hotline,jdbcType=CHAR},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=CHAR},
+			</if>
+			<if test="record.erviceExpires != null">
+				ervice_expires = #{record.erviceExpires,jdbcType=DATE},
+			</if>
+			<if test="record.qrCodeImage != null">
+				qr_code_image = #{record.qrCodeImage,jdbcType=CHAR},
+			</if>
+			<if test="record.qrCodeExpires != null">
+				qr_code_expires = #{record.qrCodeExpires,jdbcType=DATE},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update community
+		set community_id =
+		#{record.communityId,jdbcType=CHAR},
+		merchant_pid =
+		#{record.merchantPid,jdbcType=CHAR},
+		community_name =
+		#{record.communityName,jdbcType=CHAR},
+		district_code =
+		#{record.districtCode,jdbcType=CHAR},
+		community_address =
+		#{record.communityAddress,jdbcType=CHAR},
+		hotline =
+		#{record.hotline,jdbcType=CHAR},
+		status =
+		#{record.status,jdbcType=CHAR},
+		ervice_expires =
+		#{record.erviceExpires,jdbcType=DATE},
+		qr_code_image =
+		#{record.qrCodeImage,jdbcType=CHAR},
+		qr_code_expires =
+		#{record.qrCodeExpires,jdbcType=DATE}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.sjzxywlkj.cplife.pojo.Community">
+		update community
+		<set>
+			<if test="merchantPid != null">
+				merchant_pid = #{merchantPid,jdbcType=CHAR},
+			</if>
+			<if test="communityName != null">
+				community_name = #{communityName,jdbcType=CHAR},
+			</if>
+			<if test="districtCode != null">
+				district_code = #{districtCode,jdbcType=CHAR},
+			</if>
+			<if test="communityAddress != null">
+				community_address = #{communityAddress,jdbcType=CHAR},
+			</if>
+			<if test="hotline != null">
+				hotline = #{hotline,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=CHAR},
+			</if>
+			<if test="erviceExpires != null">
+				ervice_expires = #{erviceExpires,jdbcType=DATE},
+			</if>
+			<if test="qrCodeImage != null">
+				qr_code_image = #{qrCodeImage,jdbcType=CHAR},
+			</if>
+			<if test="qrCodeExpires != null">
+				qr_code_expires = #{qrCodeExpires,jdbcType=DATE},
+			</if>
+		</set>
+		where community_id = #{communityId,jdbcType=CHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.sjzxywlkj.cplife.pojo.Community">
+		update community
+		set merchant_pid = #{merchantPid,jdbcType=CHAR},
+		community_name =
+		#{communityName,jdbcType=CHAR},
+		district_code =
+		#{districtCode,jdbcType=CHAR},
+		community_address =
+		#{communityAddress,jdbcType=CHAR},
+		hotline = #{hotline,jdbcType=CHAR},
+		status = #{status,jdbcType=CHAR},
+		ervice_expires =
+		#{erviceExpires,jdbcType=DATE},
+		qr_code_image =
+		#{qrCodeImage,jdbcType=CHAR},
+		qr_code_expires =
+		#{qrCodeExpires,jdbcType=DATE}
+		where community_id =
+		#{communityId,jdbcType=CHAR}
+	</update>
+
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+
+	<insert id="addCommunity" parameterType="com.sjzxywlkj.cplife.pojo.Community">
+		insert into
+		community(community_id,merchant_pid,community_name,district_code,community_address,hotline,status,ervice_expires)
+		values(#{communityId,jdbcType=CHAR},#{merchantPid,jdbcType=CHAR},#{communityName,jdbcType=CHAR},#{districtCode,jdbcType=CHAR},#{communityAddress,jdbcType=CHAR},#{hotline,jdbcType=CHAR},#{status,jdbcType=CHAR},#{erviceExpires,jdbcType=CHAR})
+	</insert>
+
+
+	<select id="selectByCommunityName" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from community
+		where community_Name = #{communityName,jdbcType=CHAR}
+	</select>
+
+	<select id="selectByDistrictCode" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from community
+		where district_code = #{districtCode,jdbcType=CHAR}
+	</select>
+	<select id="selectByStatus" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from community
+		where status = #{status,jdbcType=CHAR}
+	</select>
+	<select id="selectByCommunityId" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from community
+		where community_id = #{communityId,jdbcType=CHAR}
+	</select>
+
+
+
+	<update id="modifyCommunityById" parameterType="com.sjzxywlkj.cplife.pojo.Community">
+		update community
+		<set>
+			<if test="communityName != null">
+				community_name = #{communityName,jdbcType=CHAR},
+			</if>
+			<if test="districtCode != null">
+				district_code = #{districtCode,jdbcType=CHAR},
+			</if>
+			<if test="communityAddress != null">
+				community_address = #{communityAddress,jdbcType=CHAR},
+			</if>
+			<if test="hotline != null">
+				hotline = #{hotline,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=CHAR},
+			</if>
+			<!-- <if test="qrCodeImage != null"> qr_code_image = #{qrCodeImage,jdbcType=CHAR}, 
+				</if> <if test="qrCodeExpires != null"> qr_code_expires = #{qrCodeExpires,jdbcType=DATE}, 
+				</if> -->
+		</set>
+		where community_id = #{communityId,jdbcType=CHAR}
+	</update>
+
+
+	<update id="modifyServiceExpires" parameterType="com.sjzxywlkj.cplife.pojo.Community">
+		update community
+		<set>
+			<if test="erviceExpires != null">
+				ervice_expires = #{erviceExpires,jdbcType=DATE},
+			</if>
+			<if test="account != null">
+				account = #{account,jdbcType=CHAR},
+			</if>
+		</set>
+		where community_id = #{communityId,jdbcType=CHAR}
+	</update>
+
+	<update id="modifyCommunityByStatus" parameterType="com.sjzxywlkj.cplife.pojo.Community">
+		update community
+		<set>
+			<if test="status != null">
+				status = #{status,jdbcType=CHAR},
+			</if>
+		</set>
+		where community_id = #{communityId,jdbcType=CHAR}
+	</update>
+
+	<select id="selectMerchantPid" parameterType="com.sjzxywlkj.cplife.pojo.Community"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from community
+		where merchant_pid = #{merchantPid,jdbcType=CHAR}
+	</select>
+
+	<update id="modifyCommunityQrCodeImageById" parameterType="com.sjzxywlkj.cplife.pojo.Community">
+		update community
+		<set>
+			<if test="qrCodeImage != null">
+				qr_code_image = #{qrCodeImage,jdbcType=CHAR},
+			</if>
+		</set>
+		where community_id = #{communityId,jdbcType=CHAR}
+	</update>
+
+	<select id="selectAccountById" resultType="java.lang.String"
+		parameterType="com.sjzxywlkj.cplife.pojo.Community">
+		select account from community where community_id =
+		#{communityId,jdbcType=CHAR}
+	</select>
+
+	<select id="selectAll" resultMap="BaseResultMap">
+		select * from community
+		<where>
+			<if test="communityId != null and communityId != ''">
+				and community_id like '%' #{communityId,jdbcType=CHAR}
+				'%'
+			</if>
+			<if test="merchantPid != null and merchantPid != ''">
+				and merchant_pid like '%' #{merchantPid,jdbcType=CHAR}
+				'%'
+			</if>
+			<if test="communityName != null and communityName != ''">
+				and community_name like '%'
+				#{communityName,jdbcType=CHAR} '%'
+			</if>
+			<if test="districtCode != null and districtCode != ''">
+				and district_code like '%' #{districtCode,jdbcType=CHAR}
+				'%'
+			</if>
+			<if test="communityAddress != null and communityAddress != ''">
+				and community_address like '%'
+				#{communityAddress,jdbcType=CHAR} '%'
+			</if>
+			<if test="hotline != null and hotline != ''">
+				and hotline like '%' #{hotline,jdbcType=CHAR} '%'
+			</if>
+			<if test="status != null and status != ''">
+				and status like '%' #{status,jdbcType=CHAR} '%'
+			</if>
+			<if test="erviceExpires != null and erviceExpires != ''">
+				and ervice_expires like '%'
+				#{erviceExpires,jdbcType=DATE} '%'
+			</if>
+			<if test="qrCodeImage != null and qrCodeImage != ''">
+				and qr_code_image like '%' #{qrCodeImage,jdbcType=CHAR}
+				'%'
+			</if>
+			<if test="qrCodeExpires != null and qrCodeExpires != ''">
+				and qr_code_expires like '%'
+				#{qrCodeExpires,jdbcType=DATE} '%'
+			</if>
+			<if test="account != null and account != ''">
+				and account like '%' #{account} '%'
+			</if>
+		</where>
+	</select>
+</mapper>

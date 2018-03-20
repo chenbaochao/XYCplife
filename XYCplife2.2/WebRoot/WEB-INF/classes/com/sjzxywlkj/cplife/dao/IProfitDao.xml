@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjzxywlkj.cplife.dao.IProfitDao">
+
+	<insert id="insertProfit">
+		insert into profit(id,jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dece)
+values(#{id},#{jan},#{feb},#{mar},#{apr},#{may},#{jun},#{jul},#{aug},#{sep},#{oct},#{nov},#{dece})
+	</insert>
+	
+	<insert id="add">
+		insert into profit(id,jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dece)
+values(#{xxx},0,0,0,0,0,0,0,0,0,0,0,0)
+	</insert>
+	
+	<delete id="deleteProfit">
+		delete from profit where id = #{xxx}
+	</delete>
+	
+	<update id="updateProfit">
+		update	profit 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="jan!=null">
+				jan = #{jan}+jan,
+			</if>
+			<if test="feb!=null">
+				feb = #{feb}+feb,
+			</if>
+			<if test="mar!=null">
+				mar = #{mar}+mar,
+			</if>
+			<if test="apr!=null">
+				apr = #{apr}+apr,
+			</if>
+			<if test="may!=null">
+				may = #{may}+may,
+			</if>
+			<if test="jun!=null">
+				jun = #{jun}+jun,
+			</if>
+			<if test="jul!=null">
+				jul = #{jul}+jul,
+			</if>
+			<if test="aug!=null">
+				aug = #{aug}+aug,
+			</if>
+			<if test="sep!=null">
+				sep = #{sep}+sep,
+			</if>
+			<if test="oct!=null">
+				oct = #{oct}+oct,
+			</if>
+			<if test="nov!=null">
+				nov = #{nov}+nov,
+			</if>
+			<if test="dec!=null">
+				dece = #{dece}+dece,
+			</if>
+			
+		 </trim>  
+			where id = #{id}
+	</update>
+	
+	
+	
+	<select id="selectByCommunityId" resultType="Profit">
+		select * from profit where id = #{xxx}
+	</select>
+	
+	<select id="selectByCompanyID" resultType="Profit">
+		SELECT * FROM profit WHERE id IN(SELECT community_id FROM community WHERE merchant_pid = #{xxx})
+	</select>
+	
+	<select id="selectBySpreadID" resultType="Profit">
+		SELECT * FROM profit WHERE id IN(SELECT community_id FROM community WHERE merchant_pid IN (SELECT merchant_pid FROM company WHERE spread_id = #{xxx}))
+	</select>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjzxywlkj.cplife.dao.CompanyMapper">
+  <resultMap id="BaseResultMap" type="com.sjzxywlkj.cplife.pojo.Company">
+    <id column="merchant_pid" jdbcType="CHAR" property="merchantPid" />
+    <result column="company_name" jdbcType="CHAR" property="companyName" />
+    <result column="district_code" jdbcType="CHAR" property="districtCode" />
+    <result column="spread_id" jdbcType="CHAR" property="spreadId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from company
+    where merchant_pid = #{merchantPid,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.sjzxywlkj.cplife.pojo.Company">
+    insert into company (merchant_pid, company_name, district_code, 
+      spread_id)
+    values (#{merchantPid,jdbcType=CHAR}, #{companyName,jdbcType=CHAR}, #{districtCode,jdbcType=CHAR}, 
+      #{spreadId,jdbcType=CHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sjzxywlkj.cplife.pojo.Company">
+    update company
+    set company_name = #{companyName,jdbcType=CHAR},
+      district_code = #{districtCode,jdbcType=CHAR},
+      spread_id = #{spreadId,jdbcType=CHAR}
+    where merchant_pid = #{merchantPid,jdbcType=CHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select merchant_pid, company_name, district_code, spread_id
+    from company
+    where merchant_pid = #{merchantPid,jdbcType=CHAR}
+  </select>
+  <select id="selectByPrimaryKeySpread" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select merchant_pid, company_name, district_code, spread_id
+    from company
+    where spread_id = #{_parameter,jdbcType=CHAR}
+  </select>
+  <select id="selectByPrimaryKeyDistrict_code" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select merchant_pid, company_name, district_code, spread_id
+    from company where district_code =#{districtCode,jdbcType=CHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select merchant_pid, company_name, district_code, spread_id
+    from company
+  </select>
+</mapper>

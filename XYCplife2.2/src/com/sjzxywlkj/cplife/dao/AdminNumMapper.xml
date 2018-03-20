@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjzxywlkj.cplife.dao.AdminNumMapper">
+	<resultMap id="BaseResultMap" type="com.sjzxywlkj.cplife.pojo.AdminNum">
+		<id column="id" jdbcType="CHAR" property="id" />
+		<result column="name" jdbcType="CHAR" property="name" />
+		<result column="num" jdbcType="INTEGER" property="num" />
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		admin_num
+		where id = #{id,jdbcType=CHAR}
+	</delete>
+	<insert id="insert" parameterType="com.sjzxywlkj.cplife.pojo.AdminNum">
+		insert into admin_num (id,
+		name, num)
+		values (#{id,jdbcType=CHAR}, #{name,jdbcType=CHAR},
+		#{num,jdbcType=INTEGER})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.sjzxywlkj.cplife.pojo.AdminNum">
+		update admin_num
+		set name = #{name,jdbcType=CHAR},
+		num = #{num,jdbcType=INTEGER}
+		where id
+		= #{id,jdbcType=CHAR}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select id, name, num
+		from admin_num
+		where id =
+		#{id,jdbcType=CHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, name, num
+		from
+		admin_num
+	</select>
+	<select id="count" resultType="java.lang.Integer"
+		parameterType="com.sjzxywlkj.cplife.pojo.AdminNum">
+		select num from admin_num where id=#{id,jdbcType=CHAR}
+	</select>
+</mapper>

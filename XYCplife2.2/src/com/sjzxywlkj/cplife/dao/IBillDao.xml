@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjzxywlkj.cplife.dao.IBillDao">
+
+	<insert id="insertBill">
+		insert into bill(bill_entry_id,community_id,out_room_id,cost_type,bill_entry_amount,acct_period,release_day,deadline,status) values(#{bill_entry_id},#{community_id},#{out_room_id},#{cost_type},#{bill_entry_amount},#{acct_period},#{release_day},#{deadline},#{status})
+	</insert>
+	
+	<update id="updateBill">
+		update bill
+		<trim prefix="set" suffixOverrides=",">
+			<if test="cost_type!=null">
+				cost_type = #{cost_type},
+			</if>
+			<if test="bill_entry_amount!=null">
+				bill_entry_amount = #{bill_entry_amount},
+			</if>
+			<if test="acct_period!=null">
+				acct_period = #{acct_period},
+			</if>
+			<if test="release_day!=null">
+				release_day = #{release_day},
+			</if>
+			<if test="deadline!=null">
+				deadline = #{deadline},
+			</if>
+			<if test="status!=null">
+				status = #{status},
+			</if>
+		 </trim>  
+			where bill_entry_id = #{bill_entry_id}
+	</update>
+	
+	<update id="offlinePayment">
+		UPDATE bill SET status = '线下支付' WHERE bill_entry_id = #{xxx}
+	</update>
+	
+	<update id="onlinePayment">
+		UPDATE bill SET status = '线上支付' WHERE bill_entry_id = #{xxx}
+	</update>
+	
+	
+	<select id="selectById" resultType="Bill">
+		select * from bill where bill_entry_id = #{xxx}
+	</select>
+	
+	<delete id="deleteById">
+		delete from bill where bill_entry_id = #{xxx}
+	</delete>
+	
+	<select id="selectAll" resultType="Bill">
+	
+		select * from bill
+		<where>
+			<if test="(groups != null and groups != '') or (building != null and building != '') or (unit != null and unit != '') or (room != null and room != '') or (address != null and address != '')">
+				and out_room_id IN (SELECT out_room_id FROM roominfo 
+				<where>
+					<if test="groups != null and groups != ''">
+						and groups like '%' #{groups} '%' 
+					</if>
+					
+					<if test="building != null and building != ''">
+						and building like '%' #{building} '%' 
+					</if>
+					
+					<if test="unit != null and unit != ''">
+						and unit like '%' #{unit} '%' 
+					</if>
+					
+					<if test="room != null and room != ''">
+						and room like '%' #{room} '%' 
+					</if>
+					
+					<if test="address != null and address != ''">
+						and address like '%' #{address} '%' 
+					</if>
+					
+				</where>
+				and  community_id like '%' #{community_id} '%'
+				)
+			</if>
+			<if test="community_id != null and community_id != ''">
+				and community_id like '%' #{community_id} '%'
+			</if>
+			<if test="out_room_id != null and out_room_id != ''">
+				and out_room_id like '%' #{out_room_id} '%'
+			</if>
+			<if test="cost_type != null and cost_type != ''">
+				and cost_type like '%' #{cost_type} '%'
+			</if>
+			<if test="acct_period != null and acct_period != ''">
+				and acct_period like '%' #{acct_period} '%'
+			</if>
+			<if test="release_day != null and release_day != ''">
+				and release_day like '%' #{release_day} '%'
+			</if>
+			<if test="deadline != null and deadline != ''">
+				and deadline like '%' #{deadline} '%'
+			</if>
+			<if test="status != null and status != ''">
+				and status like '%' #{status} '%'
+			</if>
+		</where>
+	</select>
+	
+	<select id="cost_type" resultType="String">
+		SELECT DISTINCT cost_type FROM bill WHERE community_id = #{xxx}
+	</select>
+	
+	<select id="bill_entry_amount" resultType="String">
+		SELECT DISTINCT bill_entry_amount FROM bill WHERE community_id = #{xxx}
+	</select>
+	
+	<select id="acct_period" resultType="String">
+		SELECT DISTINCT acct_period FROM bill WHERE community_id = #{xxx}
+	</select>
+	
+	<select id="release_day" resultType="String">
+		SELECT DISTINCT release_day FROM bill WHERE community_id = #{xxx}
+	</select>
+	
+	<select id="deadline" resultType="String">
+		SELECT DISTINCT deadline FROM bill WHERE community_id = #{xxx}
+	</select>
+	
+</mapper>

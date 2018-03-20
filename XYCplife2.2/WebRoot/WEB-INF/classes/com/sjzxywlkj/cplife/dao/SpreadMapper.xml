@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjzxywlkj.cplife.dao.SpreadMapper">
+	<resultMap id="BaseResultMap" type="com.sjzxywlkj.cplife.pojo.Spread">
+		<id column="id" jdbcType="CHAR" property="id" />
+		<result column="phone" jdbcType="CHAR" property="phone" />
+		<result column="alipay" jdbcType="CHAR" property="alipay" />
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from spread
+		where id = #{id,jdbcType=CHAR}
+	</delete>
+	<insert id="insert" parameterType="com.sjzxywlkj.cplife.pojo.Spread">
+		insert into spread (id, phone,alipay) values (#{id,jdbcType=CHAR}, #{phone,jdbcType=CHAR},#{alipay,jdbcType=CHAR})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.sjzxywlkj.cplife.pojo.Spread">
+		update spread
+		set
+		phone = #{phone,jdbcType=CHAR},
+		alipay = #{alipay,jdbcType=CHAR}
+		where
+		id = #{id,jdbcType=CHAR}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select id, phone, alipay
+		from spread
+		where id =
+		#{id,jdbcType=CHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, phone, alipay
+		from
+		spread
+	</select>
+
+
+	<update id="updateSpreadById" parameterType="com.sjzxywlkj.cplife.pojo.Spread">
+		update spread
+		set
+		phone = #{phone,jdbcType=CHAR},
+		alipay = #{alipay,jdbcType=CHAR}
+		where
+		id = #{id,jdbcType=CHAR}
+	</update>
+</mapper>
